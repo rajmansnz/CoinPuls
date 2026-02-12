@@ -64,3 +64,29 @@ export const TrendingCoinsFallback = () => {
         </div>
     );
 };
+
+export const CategoriesFallback = () => {
+    const skeletonData = Array.from({ length: 10 }, (_, i) => ({
+        id: `skeleton-${i}`,
+    }));
+
+    const columns: DataTableColumn<{ id: string }>[] = [
+        {
+            header: 'Category',
+            cellClassName: 'Category-cell',
+            cell: () => <div className="name-line skeleton" />,
+        },
+    ];
+
+    return (
+        <div id="categories" className="custom-scrollbar">
+            <h4>Top Categories</h4>
+            <DataTable
+                columns={columns}
+                data={skeletonData}
+                rowKey={(item) => item.id}
+                tableClassName="mt-3"
+            />
+        </div>
+    );
+};

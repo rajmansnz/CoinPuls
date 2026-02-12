@@ -38,6 +38,19 @@ export function formatPercentage(change: number | null | undefined): string {
   return `${formattedChange}%`;
 }
 
+export function formatPrice(value: number | null | undefined): string {
+  if (value === null || value === undefined || isNaN(value)) {
+    return '$0.00';
+  }
+
+  return value.toLocaleString(undefined, {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
+
 export function trendingClasses(value: number) {
   const isTrendingUp = value > 0;
 
