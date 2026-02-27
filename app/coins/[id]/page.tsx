@@ -48,8 +48,8 @@ const page = async ({ params }: NextPageProps) => {
             linkText: 'Homepage',
         },
         {
-            label: 'Circulating Supply',
-            value: coinData.market_data.circulating_supply?.toLocaleString() || 'N/A',
+            label: 'Total Supply',
+            value: coinData.market_data.total_supply?.toLocaleString() || 'N/A',
         },
         {
             label: 'Community',
