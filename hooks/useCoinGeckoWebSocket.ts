@@ -130,7 +130,7 @@ export const useCoinGeckoWebSocket = ({
 
             unsubscribeAll();
 
-            subscribe('CGSimplemnetPrice', { coin_id: [coinId], action: 'set_tokens' });
+            subscribe('CGSimplePrice', { coin_id: [coinId], action: 'set_tokens' });
         });
 
 
