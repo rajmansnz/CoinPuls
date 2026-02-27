@@ -1,5 +1,6 @@
 'use client'
 
+import { error } from "console";
 import { useEffect, useRef, useState } from "react";
 
 const WS_BASE = `${process.env.NEXT_PUBLIC_COINEGECKO_WEBSOCKET_URL}?x_cg_pro_api_key=${process.env.NEXT_PUBLIC_COINGECKO_API_KEY}`;
@@ -82,6 +83,11 @@ export const useCoinGeckoWebSocket = ({
 
         WS.onclose = () => setIsWsReady(false);
 
+        WS.onerror = (error) => {
+            console.error('Websocket error:', error);
+            setIsWsReady(false);
+        };
+
         return () => WS.close();
     }, []);
 
@@ -124,13 +130,12 @@ export const useCoinGeckoWebSocket = ({
 
             unsubscribeAll();
 
-            subscribe('CGSimplemnetPrice', { coin_id: [coinId], action: 'set_tokens' });
+            subscribe('CGSimplePrice', { coin_id: [coinId], action: 'set_tokens' });
         });
 
-        // Convert poolId format from network_pool to network:pool
-        const poolAddress = poolId?.replace('_', ':');
 
-        // Only subscribe to trades if we have a valid poolId
+        const poolAddress = poolId?.replace('_', ':') ?? '';
+
         if (poolAddress && poolAddress !== ':') {
             console.log('Subscribing to OnchainTrade with poolAddress:', poolAddress);
             subscribe('OnchainTrade', {
